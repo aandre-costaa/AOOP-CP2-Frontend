@@ -42,9 +42,7 @@
         movieDetail.value = movie;
 
         // Fetch movie comments
-        const commentsResponse = await fetch(`${apiUrl}/comments/${movieId}`);
-        const fetchedComments = await commentsResponse.json();
-        comments.value = Array.isArray(fetchedComments) ? fetchedComments : [];
+        comments.value = Array.isArray(movie.comments) ? movie.comments : [];
 
       } catch (err) {
         console.error('Error loading movie details or comments:', err);
