@@ -12,7 +12,7 @@
   const route = useRoute();
   const movieId = route.params.id;
 
-  const apiUrl = 'http://localhost:3000/movies';
+  const apiUrl = import.meta.env.VITE_API_URL;
 
   const comment = reactive({
     name: '',
@@ -61,7 +61,7 @@
         movie_id: movieId
       };
 
-      const res = await fetch('http://localhost:3000/movies/comment', {
+      const res = await fetch(`${apiUrl}/comment`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
@@ -82,7 +82,7 @@
 
   const deleteComment = async (commentId) => {
     try {
-      const response = await fetch(`http://localhost:3000/movies/comment/${commentId}`, {
+      const response = await fetch(`${apiUrl}/comment/${commentId}`, {
         method: 'DELETE',
       });
 

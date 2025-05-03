@@ -1,56 +1,56 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+  import { ref, onMounted } from 'vue';
 
-const loading = ref(false);
-const page = ref(1);
-const totalPages = ref(1);
-const movies = ref([]);
-const searchQuery = ref('');
-const apiUrl = 'http://localhost:3000/movies';
+  const loading = ref(false);
+  const page = ref(1);
+  const totalPages = ref(1);
+  const movies = ref([]);
+  const searchQuery = ref('');
+  const apiUrl = import.meta.env.VITE_API_URL;
 
-async function fetchMovies() {
-  loading.value = true;
-  try {
-    const res = await fetch(`${apiUrl}?page=${page.value}&title=${searchQuery.value}`);
-    const data = await res.json();
-    movies.value = data.movies;
-    totalPages.value = data.totalPages;
-  } catch (err) {
-    console.error('Error loading movies:', err);
-  } finally {
-    loading.value = false;
+  async function fetchMovies() {
+    loading.value = true;
+    try {
+      const res = await fetch(`${apiUrl}?page=${page.value}&title=${searchQuery.value}`);
+      const data = await res.json();
+      movies.value = data.movies;
+      totalPages.value = data.totalPages;
+    } catch (err) {
+      console.error('Error loading movies:', err);
+    } finally {
+      loading.value = false;
+    }
   }
-}
 
 
-function searchMovies() {
-  page.value = 1;
-  fetchMovies();
-}
-
-
-function prevPage() {
-  if (page.value > 1) {
-    page.value--;
+  function searchMovies() {
+    page.value = 1;
     fetchMovies();
   }
-}
 
-function nextPage() {
-  if (page.value < totalPages.value) {
-    page.value++;
-    fetchMovies();
+
+  function prevPage() {
+    if (page.value > 1) {
+      page.value--;
+      fetchMovies();
+    }
   }
-}
 
-// Fetch movies when the component mounts
-onMounted(fetchMovies);
+  function nextPage() {
+    if (page.value < totalPages.value) {
+      page.value++;
+      fetchMovies();
+    }
+  }
 
-// Handle broken urls
-const fallbackImage = 'https://www.ratio-electric.com/media/products/notfound.png';
-function handleImageError(event) {
-  event.target.src = fallbackImage;
-}
+  // Fetch movies when the component mounts
+  onMounted(fetchMovies);
+
+  // Handle broken urls
+  const fallbackImage = 'https://www.ratio-electric.com/media/products/notfound.png';
+  function handleImageError(event) {
+    event.target.src = fallbackImage;
+  }
 </script>
 
 <template>

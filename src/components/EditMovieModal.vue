@@ -2,13 +2,13 @@
   import { reactive, watch } from 'vue';
   const props = defineProps({ movie: Object });
   const emit = defineEmits(['cancel', 'update']);
-  import { ref } from 'vue';
+  const apiUrl = import.meta.env.VITE_API_URL;
 
   async function updateMovie(data) {
     try {
       const { _id, ...movieData } = data;
 
-      const response = await fetch(`http://localhost:3000/movies/${_id}`, {
+      const response = await fetch(`${apiUrl}/${_id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
