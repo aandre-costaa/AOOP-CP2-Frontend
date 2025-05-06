@@ -22,12 +22,10 @@
     }
   }
 
-
   function searchMovies() {
     page.value = 1;
     fetchMovies();
   }
-
 
   function prevPage() {
     if (page.value > 1) {

@@ -85,7 +85,6 @@
       });
 
       if (response.ok) {
-        window.location.reload();
         fetchMovieDetails();
       } else {
         console.error('Failed to delete comment');
